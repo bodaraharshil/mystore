@@ -1,15 +1,46 @@
 import { useState } from 'react'
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+import cookie from 'js-cookie';
 
 const Login = () => {
+
+    const router = useRouter();
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
+
+    const handlesubmit = async(e) => {
+        e.preventDefault();
+        const res = await fetch("http://localhost:3000/api/login",{
+             method:"POST",
+             headers:{
+                'Content-Type':'application/json'
+             },
+             body:JSON.stringify({
+                 email,
+                 password
+             })
+         })
+         const data = await res.json();
+         if(data.error)
+         {
+             M.toast({html:data.error,classes:"red"})
+         }
+         else
+         {
+            cookie.set('token',data.token);
+            localStorage.setItem('token',data.token);
+            M.toast({html:data.message,classes:'green'})
+             router.push("/")
+         }
+    }
 
     return (
         <div>
             <div className="container card authcard center-align">
                 <h3>Login up</h3>
-                <form>
+                <form onSubmit={(e) => handlesubmit(e)}>
                     <input type="email" placeholder="Email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
