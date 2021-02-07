@@ -5,7 +5,7 @@ const Home = (props) => {
     return(
       <div className="row">
         <div className="rootcard" key={index}>
-          <div className="card">
+          <div className="card pcard">
             <div className="card-image">
               <img src={item.mediaurl}/>
               <span className="card-title">{item.name}</span>

@@ -58,7 +58,7 @@ const Create = () => {
                     onChange={(e)=>setPrice(e.target.value)}
                 />
                 <div className="file-field input-field">
-                    <div className="btn">
+                    <div className="btn #1565c0 blue darken-3">
                         <span>File</span>
                         <input type="file" 
                             accept="image/*"
@@ -76,7 +76,7 @@ const Create = () => {
                         onChange={(e)=>setDescription(e.target.value)}
                     ></textarea>
                 </div>
-                <button className="btn waves-effect waves-light" type="submit" name="action">Submit
+                <button className="btn waves-effect waves-light #1565c0 blue darken-3" type="submit" name="action">Submit
                     <i className="material-icons right">send</i>
                 </button>
         

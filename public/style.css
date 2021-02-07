@@ -5,8 +5,14 @@
         justify-content: center;
     }
     
-    .card{
+    .pcard{
         max-width: 300px;
         margin: 20px;
     }
+}
+
+.authcard{
+    margin:20px auto  !important;
+    max-width: 500px !important;
+    padding: 10px;
 }
