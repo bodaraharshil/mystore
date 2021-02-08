@@ -29,8 +29,10 @@ export default async(req,res)=> {
                 const token = jwt.sign({useId:userdata._id},process.env.JWT_SECRET,{
                     expiresIn:"7d"
                 })
+                const {name,email,role} = userdata;
                 return res.status(200).json({
                      token:token,
+                     user:{name,role,email},
                      message:"you have to successfuly login"
                 })
             }

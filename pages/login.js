@@ -30,7 +30,10 @@ const Login = () => {
          else
          {
             cookie.set('token',data.token);
+            cookie.set('user',data.user)
             localStorage.setItem('token',data.token);
+            console.log("data data",data)
+            localStorage.setItem('user',data.user.email);
             M.toast({html:data.message,classes:'green'})
              router.push("/")
          }

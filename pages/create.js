@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {parseCookies} from 'nookies';
 
 const Create = () => {
 
@@ -83,6 +84,23 @@ const Create = () => {
             </form>
         </div>
     )
+}
+
+export async function getServerSideProps(ctx)
+{
+    const cookie = parseCookies(ctx);
+    const user = cookie.user ? JSON.parse(cookie.user) : ""
+    if(user.role !== "admin")
+    {
+        const {res} = ctx;
+        res.writeHead(302,{Location:"/"});
+        res.end();
+    }
+    return{
+        props:{
+
+        }
+    }
 }
 
 export default Create

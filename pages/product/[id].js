@@ -1,11 +1,13 @@
 import { useRouter } from 'next/router';
 import { useRef,useEffect } from 'react';
+import { parseCookies } from 'nookies';
 
 const Product = ({product}) => {
 
     const router = useRouter();
     const modelref = useRef();
-
+    const cookie = parseCookies();
+    const user = cookie.user ? JSON.parse(cookie.user) : ""
     useEffect(() => {
         M.Modal.init(modelref.current)
     }, [])
@@ -13,20 +15,7 @@ const Product = ({product}) => {
     if(router.isFallback ) 
     {
         return (
-        //     <div class="container">
-        //     <div class="row">
-        //       <div class="col-sm-6 text-center"><p>loader 0</p>
-        //         <div class="loader"></div></div>
-        //       <div class="col-sm-6 text-center"><p>loader 1</p><div class="loader1">
-        //     <span></span>
-        //     <span></span>
-        //     <span></span>
-        //     <span></span>
-        //     <span></span>
-        // </div></div>
-        //     </div>
-        // </div>
-        <p>Loading .....</p>
+            <p>Loading .....</p>
         )
     }
 
@@ -67,9 +56,13 @@ const Product = ({product}) => {
                 <i className="material-icons right">add</i>
             </button>
             <h6 className="left-align">{product.discription}</h6>
-            <button data-target="modal1" className="btn modal-trigger waves-effect waves-light #d32f2f red darken-2" type="submit" name="action">Delete
-                <i className="material-icons left">delete</i>
-            </button>
+            {
+                user.role !== 'user' ?
+                    <button data-target="modal1" className="btn modal-trigger waves-effect waves-light #d32f2f red darken-2" type="submit" name="action">Delete
+                        <i className="material-icons left">delete</i>
+                    </button> : null   
+
+            }
             {getModel()}
         </div>
     )
