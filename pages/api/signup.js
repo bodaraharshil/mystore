@@ -1,6 +1,7 @@
 import initDB from '../../helpers/initDB';
 import User from '../../models/user';
 import Bcrypt from 'bcryptjs';
+import Cart from '../../models/cart';
 
 initDB();
 
@@ -28,7 +29,8 @@ export default async(req,res)=> {
                 email,
                 password:hashpassword
             });
-            user.save().then((data) => {
+            user.save().then(async(data) => {
+                await new Cart({user:user._id}).save()
                 return res.status(200).json({
                     message:"you have successfuly registred"
                 })
