@@ -24,8 +24,8 @@ const Cart = ({error}) => {
     )
 }
 
-export async function getServerSideProps(ctx) {
-    const {token} = parseCookies(ctx);
+export async function getStaticProps(context) {
+    const {token} = parseCookies(context);
     if(!token)
     {
         return {
@@ -34,22 +34,21 @@ export async function getServerSideProps(ctx) {
             }
         }
     }
-    const res = await fetch("http://localhost:3000/api/cart",{
+    const res = await fetch("http://localhost:3000/api/products",{
         headers:{
             "Authorization":token
         }
-    })
-    const products = await res.json();
-    console.log("products",products)
-    if(products.error)
+    })    
+    const data = await res.json();
+    if(data.error)
     {
         return {
-            props:{error: products.error}
+            props:{error: data.error}
         }
     }
     return {
-        props:{products}
+        props:{data}
     }
-}
+  }
 
 export default Cart

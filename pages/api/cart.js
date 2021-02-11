@@ -1,3 +1,5 @@
+
+
 import initDB from '../../helpers/initDB';
 import JWT from 'jsonwebtoken';
 import Cart from '../../models/cart';
@@ -10,12 +12,12 @@ export default async(req,res) => {
             await fetchUsercart(req,res)
             break;
         case "PUT":
-            await addProduct(req,res);
+            await Addtocart(req,res);
             break;
     }
 }
 
-async function Authenticated(icomponent){
+function Authenticated(icomponent){
     return async(req,res) => {
         const { authorization } = req.headers;
         if(!authorization)
@@ -26,7 +28,7 @@ async function Authenticated(icomponent){
         }
         try
         {
-            const user = await JWT.verify(authorization,process.env.JWT_SECRET);
+            const user = JWT.verify(authorization,process.env.JWT_SECRET);
             req.user =user
             return icomponent(req,res)
         }
@@ -39,8 +41,28 @@ async function Authenticated(icomponent){
     }
 } 
 
-const fetchUsercart =Authenticated(async(req,res) => {
-    console.log("000000000000",user)
+const fetchUsercart = Authenticated(async(req,res) => {
     const cart = await Cart.findOne({user:user.useId});
     res.status(200).json(cart.products)
+})
+
+const Addtocart = Authenticated(async(req,res) => {
+    const {qty,productId} = req.body;
+    const cart = await Cart.findOne({user:req.user.useId});
+    const pExstis = cart.products.some(pdoc =>productId === pdoc.product.toString())
+    if(pExstis)
+    {
+        await Cart.findOneAndUpdate(
+                {_id:cart.id,"products.product":productId},
+                {$inc:{"products.$.qty":qty}}
+            )
+    }
+    else
+    {
+        const newproduct = {qty,product:productId}
+        await Cart.findOneAndUpdate({_id:cart._id},{$push:{products:newproduct}})
+    }
+    res.status(200).json({
+        message:"product addedd successfuly"
+    })
 })
