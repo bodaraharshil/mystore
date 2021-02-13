@@ -1,8 +1,11 @@
 import Stripe from 'stripe';
+import initDB from '../../helpers/initDB';
 import Cart from '../../models/cart';
 import JWT from 'jsonwebtoken';
 import Order from '../../models/order';
 
+
+initDB();
 const stripe = Stripe("sk_test_51IKM7hKrEzRlezT45TzqafcE8jQ8Zge14boymd3Z2ZklZVnbxshxRtZsOSJHDRyFjkbsW4hFSfuQOnYlCdEO7Jl500VlmIbOOY");
 
 export default async (req,res) => {

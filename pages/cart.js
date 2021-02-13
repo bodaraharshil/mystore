@@ -51,7 +51,7 @@ const Cart = ({error,data}) => {
                 Object.values(cProduct).map(item =>{
                     price = price + item.qty * item.product.price
                     return (
-                        <div style={{display:'flex',margin:"20px"}}>
+                        <div style={{display:'flex',margin:"20px"}} key={item._id}>
                             <img src={item.product.mediaurl} style={{width:"30%"}}/>
                             <div style={{margin:'20px'}}>
                                 <h6>{item.product.name}</h6>
@@ -85,6 +85,7 @@ const Cart = ({error,data}) => {
         else
         {
             M.toast({html:data.message,classes:"green"})
+            router.push("/");
         }
     }
 

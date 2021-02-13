@@ -1,10 +1,52 @@
-import { Router } from 'next/router';
 import {parseCookies} from 'nookies';
+import { useEffect,useRef } from 'react';
 
-const Account = () => {
+const Account = ({orders}) => {
+    const ordercart  = useRef(null);
+    const cookie = parseCookies();
+    const user = cookie.user ? JSON.parse(cookie.user) : "";
+    useEffect(() => {
+        M.Collapsible.init(ordercart.current);
+    }, [])
+    const OrderHistory = () => {
+        return(
+            <ul className="collapsible" ref={ordercart}>
+               {
+                   Object.values(orders).map(item => {
+                       return (
+                        <li key={item._id}>
+                            <div className="collapsible-header"><i className="material-icons">folder</i>{item.createdAt}</div>
+                            <div className="collapsible-body">
+                                <h5>Total ₹ {item.total}</h5>
+                                {
+                                    item.products.map(pitem => {
+                                        return (
+                                            <h6>{pitem.product.name} * {pitem.qty}</h6>
+                                        )
+                                    })
+                                }
+                            </div>
+                        </li>
+                       )
+                   })
+               }
+          </ul>
+        )
+    }
+    
     return (
-        <div>
-            <h1>OPOPOP</h1>            
+        <div className="container">
+            <div className="center-align white-text" style={{marginTop:"10px",backgroundColor:"#1565c0",padding:'3px'}}>
+                <h5>{user.name}</h5>
+                <h5>{user.email}</h5>
+            </div>
+                <h4>Order History</h4>
+                {
+                    orders.length == 0 ?
+                    <h6>Your have no order history</h6>
+                    :
+                    <OrderHistory/>
+                }
         </div>
     )
 }
@@ -18,9 +60,15 @@ export async function getServerSideProps(ctx)
         res.writeHead(302,{Location:"/login"});
         res.end();
     }
-    return{
+    const res = await fetch("http://localhost:3000/api/order",{
+        headers:{
+            "Authorization":token
+        }
+    })    
+    const data = await res.json();
+    return {
         props:{
-
+            orders:data.Orders
         }
     }
 }
