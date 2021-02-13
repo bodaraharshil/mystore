@@ -1,6 +1,7 @@
 import {parseCookies} from 'nookies';
 import { useEffect,useRef } from 'react';
 import UserRole from '../components/UserRole';
+import baseUrl from '../helpers/baseurl';
 
 const Account = ({orders}) => {
     const ordercart  = useRef(null);
@@ -64,7 +65,7 @@ export async function getServerSideProps(ctx)
         res.writeHead(302,{Location:"/login"});
         res.end();
     }
-    const res = await fetch("http://localhost:3000/api/order",{
+    const res = await fetch(`${baseUrl}/api/order`,{
         headers:{
             "Authorization":token
         }

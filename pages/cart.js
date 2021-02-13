@@ -4,6 +4,7 @@ import cookie from 'js-cookie';
 import { useRouter } from 'next/router';
 import StripeCheckout from 'react-stripe-checkout';
 import Link from 'next/link';
+import baseUrl from '../helpers/baseurl';
 
 const Cart = ({error,data}) => {
     const {token} = parseCookies();
@@ -30,7 +31,7 @@ const Cart = ({error,data}) => {
     }
 
     const handleremove = async(pid) => {
-        const res = await fetch(`http://localhost:3000/api/cart`,{
+        const res = await fetch(`${baseUrl}/api/cart`,{
             method:"DELETE",
             headers:{
                 "Content-Type":"application/json",
@@ -67,7 +68,7 @@ const Cart = ({error,data}) => {
     }
 
     const handleCheckout = async(paymentInfo) => {
-        const res = await fetch(`http://localhost:3000/api/payment`,{
+        const res = await fetch(`${baseUrl}/api/payment`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json",
@@ -130,7 +131,7 @@ export async function getServerSideProps(context) {
             }
         }
     }
-    const res = await fetch("http://localhost:3000/api/cart",{
+    const res = await fetch(`${baseUrl}/api/cart`,{
         headers:{
             "Authorization":token
         }

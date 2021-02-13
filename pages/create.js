@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {parseCookies} from 'nookies';
+import baseUrl from '../helpers/baseurl';
 
 const Create = () => {
 
@@ -24,7 +25,7 @@ const Create = () => {
     const handlesubmit = async(e) => {
         e.preventDefault();
         const mediaurl =  await imageUpload();
-        const res = await fetch(`http://localhost:3000/api/products`,{
+        const res = await fetch(`${baseUrl}/api/products`,{
             method:"POST",
             headers:{
                 'Content-Type':'application/json'

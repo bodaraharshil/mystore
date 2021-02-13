@@ -1,4 +1,5 @@
 import Link from "next/link";
+import baseUrl from '../helpers/baseurl';
 
 const Home = (props) => {
   const ProductList = Object.values(props.products).map((item,index) => {
@@ -28,9 +29,18 @@ const Home = (props) => {
     </div>
   )
 }
+// export async function getStaticProps(context) {
+//   const res = await fetch(`${baseUrl}/api/products`);    
+//   const data = await res.json();
+//   return {
+//     props: {
+//       products:data.data,
+//     }, 
+//   }
+// }
 
-export async function getStaticProps(context) {
-  const res = await fetch("http://localhost:3000/api/products");    
+export async function getServerSideProps(context) {
+  const res = await fetch(`${baseUrl}/api/products`);    
   const data = await res.json();
   return {
     props: {

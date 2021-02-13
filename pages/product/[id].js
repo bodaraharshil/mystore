@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useRef,useEffect,useState } from 'react';
 import { parseCookies } from 'nookies';
+import baseUrl from '../../helpers/baseurl';
 
 const Product = ({product}) => {
 
@@ -40,7 +41,7 @@ const Product = ({product}) => {
     }
 
     const deleteProduct = async() => {
-        const res = await fetch(`http://localhost:3000/api/product/${product._id}`,{
+        const res = await fetch(`${baseUrl}/api/product/${product._id}`,{
             method:"DELETE"
         });
         const data = await res.json();
@@ -48,7 +49,7 @@ const Product = ({product}) => {
     }
 
     const Addtocart = async() => {
-        const res = await fetch("http://localhost:3000/api/cart",{
+        const res = await fetch(`${baseUrl}/api/cart`,{
             method:"PUT",
             headers:{
                 "Content-Type":"application/json",
@@ -99,7 +100,7 @@ const Product = ({product}) => {
 }
 
 export async function getServerSideProps({params:{ id }}){
-    const res = await fetch(`http://localhost:3000/api/product/${id}`)
+    const res = await fetch(`${baseUrl}/api/product/${id}`)
     const data = await res.json(); 
     return {
         props:{

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import baseUrl from '../helpers/baseurl';
 
 import cookie from 'js-cookie';
 
@@ -12,7 +13,7 @@ const Login = () => {
 
     const handlesubmit = async(e) => {
         e.preventDefault();
-        const res = await fetch("http://localhost:3000/api/login",{
+        const res = await fetch(`${baseUrl}/api/login`,{
              method:"POST",
              headers:{
                 'Content-Type':'application/json'
