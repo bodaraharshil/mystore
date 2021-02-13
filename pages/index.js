@@ -10,11 +10,11 @@ const Home = (props) => {
               <img src={item.mediaurl}/>
               <span className="card-title">{item.name}</span>
             </div>
+            <div className="card-action">
+              <a href="#">₹ {item.price}</a>
+            </div>
             <div className="card-content">
               <Link href={'/product/[id]'} as={`/product/${item._id}`}><a>View Product</a></Link>
-            </div>
-            <div className="card-action">
-              <a href="#">{item.price}</a>
             </div>
           </div>
         </div>

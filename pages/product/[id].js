@@ -61,7 +61,6 @@ const Product = ({product}) => {
             })
         });
         const data = await res.json();
-        console.log("{}{}{}{}",data)
         if(data.error)
         {
             M.toast({html:data.error,classes:"red"})
@@ -76,7 +75,7 @@ const Product = ({product}) => {
         <div className="container center-align">
             <h3>{product.name}</h3>
             <img src={product.mediaurl} style={{width:'30%'}}/>
-            <h5>RS {product.price}</h5>
+            <h5>₹  {product.price}</h5>
             <input type="number" value={qty} onChange={(e) => setqty(Number(e.target.value))} style={{ width:'400px',margin:'10px' }} min='1' placeholder="Quntity"/>      
             {user ? 
                 <button className="btn waves-effect waves-light #1565c0 blue darken-3" type="submit" name="action" onClick={() => Addtocart()}>Add

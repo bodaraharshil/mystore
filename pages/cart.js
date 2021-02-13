@@ -2,12 +2,14 @@ import React,{useState} from 'react'
 import { parseCookies } from 'nookies';
 import cookie from 'js-cookie';
 import { useRouter } from 'next/router';
+import StripeCheckout from 'react-stripe-checkout';
 import Link from 'next/link';
 
 const Cart = ({error,data}) => {
     const {token} = parseCookies();
     const router = useRouter();
     const [cProduct,setCartProduct] = useState(data);
+    let price=0;
     if(!token)
     {
         return(
@@ -47,6 +49,7 @@ const Cart = ({error,data}) => {
             <>
             {
                 Object.values(cProduct).map(item =>{
+                    price = price + item.qty * item.product.price
                     return (
                         <div style={{display:'flex',margin:"20px"}}>
                             <img src={item.product.mediaurl} style={{width:"30%"}}/>
@@ -63,9 +66,55 @@ const Cart = ({error,data}) => {
         )
     }
 
+    const handleCheckout = async(paymentInfo) => {
+        const res = await fetch(`http://localhost:3000/api/payment`,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization":token
+            },
+            body:JSON.stringify({
+                paymentInfo
+            })
+        })
+        const data = await res.json();
+        if(data.error)
+        {
+            M.toast({html:data.error,classes:"red"})
+        }
+        else
+        {
+            M.toast({html:data.message,classes:"green"})
+        }
+    }
+
+    const TotalPrice = () => {
+        return(
+            <div className="container"  style={{display:'flex',justifyContent:"space-between"}}>
+                <h5>Total ₹ {price}</h5>
+                {data.length != 0 ?
+                <StripeCheckout
+                    name="My store"
+                    amount={price*100}
+                    image={data.length > 0 ? data[0].product.mediaurl :"" }
+                    currency="INR"
+                    shippingAddress={true}
+                    billingAddress={true}
+                    zipCode={true}
+                    stripeKey="pk_test_51IKM7hKrEzRlezT44edQI6nHYdUuUrgXSBInusN0qN8989ptaY9wstDhl5JJBmvjrY40EYq0hpZXvitpXhQSa42800pjJv1pbF"
+                    token={(paymentInfo) => handleCheckout(paymentInfo)}
+                >
+                    <button className="btn">Checkout</button>
+                </StripeCheckout>
+                :null }
+            </div>
+        )
+    }
+
     return (
         <div className="container">
             <CartItems/>
+            <TotalPrice/>
         </div>
     )
 }
