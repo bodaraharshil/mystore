@@ -14,7 +14,7 @@ export default async (req,res) => {
 }
 
 const fetchUsers =  Authenticated(async(req,res)=> {
-    const users = await User.find({_id:{$ne:req.user.useId}})
+    const users = await User.find({_id:{$ne:req.user.useId}}).select("-password")
     res.status(200).json(users)
 })
 
@@ -25,6 +25,6 @@ const ChangeRole =  Authenticated(async(req,res)=> {
         {_id},
         {role:newRole},
         {new:true}
-    )
+    ).select("-password")
     res.status(200).json(users);
 })

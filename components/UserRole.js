@@ -22,7 +22,6 @@ function userRoles(){
             })
         });
         const data = await res.json();
-        console.log(data);
         const updateusers = Object.values(Users).map(user =>{
             if(user.role != data.role && user.email == data.email)
             {

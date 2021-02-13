@@ -48,7 +48,6 @@ const Product = ({product}) => {
     }
 
     const Addtocart = async() => {
-      console.log("{}{}{}{}{}{",qty,product._id)
         const res = await fetch("http://localhost:3000/api/cart",{
             method:"PUT",
             headers:{
@@ -108,28 +107,5 @@ export async function getServerSideProps({params:{ id }}){
         }
     }
 }
-
-
-
-// export async function getStaticProps({params:{id}}) {
-//     const res = await fetch(`http://localhost:3000/api/product/${id}`);    
-//     const data = await res.json();
-//     console.log(":::",data)
-//     return {
-//       props: {
-//         product:data.data,
-//       }, 
-//     }
-//   }
-  
-//   export async function getStaticPaths() {
-//     return {
-//       paths: [
-//         { params: {id:"601e9381250cd14c55fb2f91"} }
-//       ],
-//       fallback:false
-//     }
-//   }
-  
 
 export default Product;

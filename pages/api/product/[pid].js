@@ -24,7 +24,6 @@ const getProduct = async(req,res) => {
                 data:data 
             })
         }).catch((error) => {
-            console.log("Error",error);
             res.status(401).json({
                 error:"something went wrong"
             })
@@ -39,7 +38,6 @@ const deleteProduct = async(req,res) => {
             message:"product delete",
         })
     }).catch((error) => {
-        console.log("Error",error);
         res.status(401).json({
             error:"something went wrong"
         })

@@ -45,7 +45,6 @@ const Addtocart = Authenticated(async(req,res) => {
 })
 
 const Removeproduct =Authenticated(async(req,res) => {
-    console.log("{}{}{}",req.body)
     const {productId} = req.body
     const cart = await Cart.findOneAndUpdate(
         {user:req.user.useId},
