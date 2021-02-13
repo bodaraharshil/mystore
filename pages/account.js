@@ -48,7 +48,9 @@ const Account = ({orders}) => {
                     :
                     <OrderHistory/>
                 }
-                <UserRole/>
+                {
+                    user.role == "root" && <UserRole/>
+                }
         </div>
     )
 }

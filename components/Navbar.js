@@ -32,7 +32,7 @@ const Navbar = () => {
           <ul id="nav-mobile" className="right">
           <li className={isActive("/cart")}><Link href="/cart"><a>Cart</a></Link></li>
           {
-            user.role === "admin" && 
+            (user.role == "admin" || user.role == "root") &&
             <li className={isActive("/create")}><Link href="/create"><a>Create</a></Link></li>
           }
           {
