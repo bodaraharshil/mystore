@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start-dev": "next start",
-    "start": "node server.js",
+    "start": "next start",
     "heroku-postbuild": "yarn run build"
   },
   "dependencies": {
