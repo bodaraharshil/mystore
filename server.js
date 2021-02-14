@@ -8,7 +8,7 @@ const cors = require('cors')
 app.use(express.static(path.join(__dirname, 'build')));
 app.use(cors())
 app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, '.next', 'index.html'));
+    res.sendFile(path.join(__dirname, '.next', ''));
 });
 
 app.listen(port);
