@@ -1,7 +1,7 @@
 //server.js
 const express = require('express');
 const path = require('path');
-const port = process.env.PORT || 8000 || 5000;
+const port = process.env.PORT || 3000;
 const app = express();
 const cors = require('cors')
 
