@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "unit": "jasmine",
+    "lint": "standard",
+    "fix": "standard --fix",
     "dev": "next dev",
     "build": "next build",
-    "start-dev": "next start",
-    "start": "next start",
-    "heroku-postbuild": "next build"
+    "heroku-postbuild": "next build",
+    "start": "next start"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
